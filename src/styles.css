@@ -76,6 +76,16 @@ a {
   background: rgba(8, 11, 18, 0.88);
   box-shadow: 0 26px 90px rgba(0, 0, 0, 0.42);
   backdrop-filter: blur(22px);
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 500ms ease,
+    transform 500ms ease;
+}
+
+.toast-notification.is-leaving {
+  opacity: 0;
+  transform: translateY(12px);
 }
 
 .toast-notification span {
@@ -778,13 +788,6 @@ p {
   grid-template-columns: minmax(0, 0.85fr) minmax(320px, 0.65fr);
   gap: clamp(28px, 6vw, 86px);
   align-items: start;
-}
-
-.contact-copy > a[href^="mailto"] {
-  display: inline-flex;
-  margin-top: 18px;
-  color: var(--teal);
-  font-weight: 850;
 }
 
 .contact-socials {

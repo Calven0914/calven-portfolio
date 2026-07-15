@@ -119,6 +119,14 @@ const socials = [
 ];
 
 function SocialIcon({ type }) {
+  if (type === "mail") {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4.75 5.5h14.5c1.24 0 2.25 1.01 2.25 2.25v8.5c0 1.24-1.01 2.25-2.25 2.25H4.75A2.25 2.25 0 0 1 2.5 16.25v-8.5C2.5 6.51 3.51 5.5 4.75 5.5Zm.14 1.75 6.3 5.06c.48.39 1.15.39 1.63 0l6.3-5.06H4.89Zm14.86 1.46-5.84 4.7a3.02 3.02 0 0 1-3.82 0l-5.84-4.7v7.54c0 .28.22.5.5.5h14.5a.5.5 0 0 0 .5-.5V8.71Z" />
+      </svg>
+    );
+  }
+
   if (type === "github") {
     return (
       <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -140,6 +148,7 @@ function App() {
   const [activeSection, setActiveSection] = useState("top");
   const [formState, setFormState] = useState("idle");
   const [formMessage, setFormMessage] = useState("");
+  const [isToastLeaving, setIsToastLeaving] = useState(false);
 
   function handleHeroPointerMove(event) {
     const hero = heroRef.current;
@@ -334,9 +343,32 @@ function App() {
     return () => context.revert();
   }, []);
 
+  useEffect(() => {
+    if (!formMessage || formState === "sending") {
+      setIsToastLeaving(false);
+      return undefined;
+    }
+
+    const fadeTimer = window.setTimeout(() => {
+      setIsToastLeaving(true);
+    }, 4500);
+
+    const removeTimer = window.setTimeout(() => {
+      setFormMessage("");
+      setFormState("idle");
+      setIsToastLeaving(false);
+    }, 5000);
+
+    return () => {
+      window.clearTimeout(fadeTimer);
+      window.clearTimeout(removeTimer);
+    };
+  }, [formMessage, formState]);
+
   async function handleSubmit(event) {
     event.preventDefault();
     const form = event.currentTarget;
+    setIsToastLeaving(false);
     setFormState("sending");
     setFormMessage("Sending your message...");
 
@@ -368,7 +400,11 @@ function App() {
   return (
     <div className="site" ref={rootRef}>
       {formMessage && (
-        <div className={`toast-notification ${formState}`} role="status" aria-live="polite">
+        <div
+          className={`toast-notification ${formState}${isToastLeaving ? " is-leaving" : ""}`}
+          role="status"
+          aria-live="polite"
+        >
           <span>{formState === "error" ? "!" : formState === "sent" ? "✓" : "…"}</span>
           <p>{formMessage}</p>
         </div>
@@ -630,8 +666,17 @@ function App() {
               across backend systems, automation, AI-assisted workflows, and clean user
               interfaces.
             </p>
-            <a href="mailto:calvenc0914@gmail.com">calvenc0914@gmail.com</a>
             <div className="contact-socials" aria-label="Social links">
+              <a
+                className="social-link magnetic"
+                href="mailto:calvenc0914@gmail.com"
+                onPointerLeave={resetMagnetic}
+                onPointerMove={handleMagneticMove}
+                aria-label="Email Calven"
+                title="Email Calven"
+              >
+                <SocialIcon type="mail" />
+              </a>
               {socials.map((social) => (
                 <a
                   className="social-link magnetic"
