@@ -1,0 +1,36 @@
+{
+  "name": "interactive-website",
+  "version": "1.0.0",
+  "description": "A cinematic React portfolio for Calven Chow with GSAP scroll animation and a Supabase contact form.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Calven0914/trigger-lab.git"
+  },
+  "keywords": [
+    "portfolio",
+    "react",
+    "gsap",
+    "supabase",
+    "vercel"
+  ],
+  "author": "Calven Chow Kai Wen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Calven0914/trigger-lab/issues"
+  },
+  "homepage": "https://github.com/Calven0914/trigger-lab#readme",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.110.5",
+    "@vitejs/plugin-react": "^6.0.3",
+    "gsap": "^3.15.0",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "vite": "^8.1.4"
+  }
+}

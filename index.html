@@ -1,125 +1,16 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="A Vercel and Supabase ready GSAP ScrollTrigger animation demo."
+      content="Calven Chow Kai Wen portfolio: software engineering, AI automation, computer vision, QA, and database-backed products."
     />
-    <title>Scroll Trigger Deploy Demo</title>
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
-    <link rel="stylesheet" href="./styles.css" />
+    <title>Calven Chow | Software Developer Portfolio</title>
   </head>
   <body>
-    <header class="site-header" aria-label="Primary">
-      <a class="brand" href="#top" aria-label="Scroll Trigger Deploy Demo home">
-        <span class="brand-mark" aria-hidden="true"></span>
-        <span>Trigger Lab</span>
-      </a>
-      <nav>
-        <a href="#flow">Flow</a>
-        <a href="#supabase">Supabase</a>
-        <a href="#deploy">Deploy</a>
-      </nav>
-    </header>
-
-    <main id="top">
-      <section class="hero" aria-labelledby="hero-title">
-        <div class="hero-copy">
-          <p class="eyebrow">GSAP ScrollTrigger + Vercel + Supabase</p>
-          <h1 id="hero-title">A scroll story for your deployment test.</h1>
-          <p>
-            Panels pin, cards glide, and deployment state reacts as the page
-            moves. Add your Supabase public env vars in Vercel and the status
-            card will connect automatically.
-          </p>
-          <div class="hero-actions" aria-label="Page shortcuts">
-            <a class="button primary" href="#flow">See animation</a>
-            <a class="button secondary" href="#deploy">Deploy notes</a>
-          </div>
-        </div>
-
-        <div class="hero-visual" aria-hidden="true">
-          <img src="./assets/dashboard-panel.svg" alt="" />
-        </div>
-      </section>
-
-      <section id="flow" class="pin-stage" aria-label="Animated deploy flow">
-        <div class="stage-copy">
-          <p class="eyebrow">Scroll sequence</p>
-          <h2>From idea to live preview.</h2>
-          <p>
-            ScrollTrigger pins this section while each step animates through the
-            timeline.
-          </p>
-        </div>
-
-        <div class="timeline-cards">
-          <article class="step-card" data-step="01">
-            <span>Design</span>
-            <h3>Build the interaction</h3>
-            <p>GSAP drives the progress bar, panel motion, and reveal timing.</p>
-          </article>
-          <article class="step-card" data-step="02">
-            <span>Connect</span>
-            <h3>Check Supabase</h3>
-            <p>The client asks Vercel for public Supabase configuration.</p>
-          </article>
-          <article class="step-card" data-step="03">
-            <span>Ship</span>
-            <h3>Deploy on Vercel</h3>
-            <p>Static assets and the serverless config endpoint deploy together.</p>
-          </article>
-        </div>
-
-        <div class="progress-shell" aria-hidden="true">
-          <div class="progress-bar"></div>
-        </div>
-      </section>
-
-      <section id="supabase" class="status-section" aria-labelledby="status-title">
-        <div class="section-heading">
-          <p class="eyebrow">Runtime check</p>
-          <h2 id="status-title">Supabase connection card</h2>
-        </div>
-
-        <article class="status-card">
-          <div>
-            <span class="status-dot" data-status-dot></span>
-            <p class="status-label" data-status-label>Checking configuration...</p>
-          </div>
-          <p data-status-detail>
-            Add <code>SUPABASE_URL</code> and <code>SUPABASE_ANON_KEY</code> to
-            Vercel to enable the browser client.
-          </p>
-        </article>
-      </section>
-
-      <section id="deploy" class="deploy-section" aria-labelledby="deploy-title">
-        <div class="section-heading">
-          <p class="eyebrow">Vercel ready</p>
-          <h2 id="deploy-title">Environment variables to set</h2>
-        </div>
-        <div class="deploy-grid">
-          <article>
-            <h3>SUPABASE_URL</h3>
-            <p>Your Supabase project URL, safe to expose in the browser.</p>
-          </article>
-          <article>
-            <h3>SUPABASE_ANON_KEY</h3>
-            <p>Your public anon key. Never use the service-role key here.</p>
-          </article>
-          <article>
-            <h3>No build step</h3>
-            <p>Vercel can serve this as a static project with one API route.</p>
-          </article>
-        </div>
-      </section>
-    </main>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <script type="module" src="./script.js"></script>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
