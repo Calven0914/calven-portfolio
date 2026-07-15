@@ -1,20 +1,75 @@
-# Calven Chow Portfolio
+# Calven Portfolio
 
-A cinematic React portfolio for Calven Chow Kai Wen with GSAP ScrollTrigger
-animation, Vercel deployment support, and a Supabase-backed contact form.
+Modern personal portfolio for **Calven Chow Kai Wen**, built with React, GSAP
+ScrollTrigger, Vercel, and Supabase. The site presents profile storytelling,
+selected projects, education, technical skills, and a production contact form
+with secure server-side submission.
 
-## Run locally
+Live site: [calven-portfolio-delta.vercel.app](https://calven-portfolio-delta.vercel.app)
 
-Install dependencies and run Vite:
+## Highlights
+
+- Cinematic hero section with mouse-reactive profile card
+- GSAP-powered scroll storytelling and section reveals
+- Active sticky navigation with current-section highlighting
+- Animated counters, staggered project/experience reveals, and magnetic buttons
+- Responsive layout for desktop and mobile
+- Supabase-backed contact form through a Vercel serverless API route
+- Production-safe environment variable setup with no secrets committed
+
+## Tech Stack
+
+- **Frontend:** React, Vite, CSS
+- **Animation:** GSAP, ScrollTrigger
+- **Backend:** Vercel Serverless Functions
+- **Database:** Supabase Postgres
+- **Deployment:** Vercel
+
+## Project Structure
+
+```text
+api/
+  contact.js          # Serverless contact form endpoint
+public/
+  profile.jpeg        # Portfolio profile image
+src/
+  App.jsx             # Main portfolio UI and animation setup
+  main.jsx            # React entry point
+  styles.css          # Global styling and responsive layout
+```
+
+## Local Development
 
 ```bash
 npm install
 npm run dev
 ```
 
-## Supabase contact table
+Open the local URL printed by Vite, usually:
 
-Create this table in Supabase:
+```text
+http://127.0.0.1:5173
+```
+
+## Environment Variables
+
+Create these only in Vercel Project Settings. Do not commit them to Git.
+
+```env
+SUPABASE_URL=https://your-project.supabase.co
+SUPABASE_ANON_KEY=your-public-anon-key
+```
+
+For this project, the current production Supabase URL is:
+
+```env
+SUPABASE_URL=https://qnkzixmnicemlbmjywvm.supabase.co
+```
+
+## Supabase Setup
+
+The contact form writes to `public.contact_messages`. Use this schema and RLS
+policy:
 
 ```sql
 create table if not exists public.contact_messages (
@@ -39,18 +94,35 @@ with check (
 );
 ```
 
-The Vercel API route expects these environment variables:
+The client never receives a service-role key. Contact form requests go through
+`/api/contact`, which uses the Vercel environment variables at runtime.
+
+## Deployment
+
+The project is deployed on Vercel.
 
 ```bash
-SUPABASE_URL=https://your-project.supabase.co
-SUPABASE_ANON_KEY=your-public-anon-key
+npm run build
+npx vercel --prod
 ```
 
-## Deploy on Vercel
+Recommended Vercel settings:
 
-1. Import the GitHub repository into Vercel.
-2. Add `SUPABASE_URL` and `SUPABASE_ANON_KEY` in Project Settings.
-3. Deploy with the default Vite settings.
+- Framework preset: `Vite`
+- Build command: `vite build`
+- Output directory: `dist`
+- Environment variables: set for `Production`
 
-The contact form posts to `/api/contact`, which writes into Supabase from the
-serverless function.
+## Security Notes
+
+- `.env`, `.env.local`, and `.vercel/` are ignored
+- Supabase uses the public anon key with Row Level Security
+- No service-role key is required for the current contact form flow
+- Never paste production secrets into commits, issues, screenshots, or chat
+
+## Author
+
+Calven Chow Kai Wen
+
+- [LinkedIn](https://www.linkedin.com/in/calven-chow-kai-wen-03703727a/)
+- [GitHub](https://github.com/Calven0914)

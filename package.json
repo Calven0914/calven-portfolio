@@ -1,5 +1,5 @@
 {
-  "name": "interactive-website",
+  "name": "calven-portfolio",
   "version": "1.0.0",
   "description": "A cinematic React portfolio for Calven Chow with GSAP scroll animation and a Supabase contact form.",
   "type": "module",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Calven0914/trigger-lab.git"
+    "url": "git+https://github.com/Calven0914/calven-portfolio.git"
   },
   "keywords": [
     "portfolio",
@@ -22,9 +22,9 @@
   "author": "Calven Chow Kai Wen",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Calven0914/trigger-lab/issues"
+    "url": "https://github.com/Calven0914/calven-portfolio/issues"
   },
-  "homepage": "https://github.com/Calven0914/trigger-lab#readme",
+  "homepage": "https://github.com/Calven0914/calven-portfolio#readme",
   "dependencies": {
     "@supabase/supabase-js": "^2.110.5",
     "@vitejs/plugin-react": "^6.0.3",
