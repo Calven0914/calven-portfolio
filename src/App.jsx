@@ -68,12 +68,30 @@ const skills = [
 
 function App() {
   const rootRef = useRef(null);
+  const heroRef = useRef(null);
   const [formState, setFormState] = useState("idle");
   const [formMessage, setFormMessage] = useState("");
 
+  function handleHeroPointerMove(event) {
+    const hero = heroRef.current;
+
+    if (!hero) {
+      return;
+    }
+
+    const bounds = hero.getBoundingClientRect();
+    const x = ((event.clientX - bounds.left) / bounds.width - 0.5).toFixed(3);
+    const y = ((event.clientY - bounds.top) / bounds.height - 0.5).toFixed(3);
+
+    hero.style.setProperty("--mouse-x", x);
+    hero.style.setProperty("--mouse-y", y);
+    hero.style.setProperty("--pointer-x", `${event.clientX - bounds.left}px`);
+    hero.style.setProperty("--pointer-y", `${event.clientY - bounds.top}px`);
+  }
+
   useEffect(() => {
     const context = gsap.context(() => {
-      gsap.from(".hero-kicker, .hero-title span, .hero-copy, .hero-actions", {
+      gsap.from(".hero-kicker, .hero-title span, .hero-copy, .hero-actions, .hero-meta", {
         y: 44,
         autoAlpha: 0,
         duration: 1,
@@ -81,9 +99,9 @@ function App() {
         ease: "power3.out",
       });
 
-      gsap.to(".orbital-ring", {
+      gsap.to(".mesh-ring", {
         rotate: 360,
-        duration: 28,
+        duration: 42,
         repeat: -1,
         ease: "none",
       });
@@ -198,11 +216,8 @@ function App() {
   return (
     <div className="site" ref={rootRef}>
       <header className="nav">
-        <a href="#top" className="brand" aria-label="Calven Chow portfolio home">
-          <span className="brand-mark" aria-hidden="true" />
-          <span>Calven Chow</span>
-        </a>
         <nav aria-label="Primary navigation">
+          <a href="#top">Home</a>
           <a href="#story">Story</a>
           <a href="#projects">Projects</a>
           <a href="#contact">Contact</a>
@@ -210,13 +225,25 @@ function App() {
       </header>
 
       <main id="top">
-        <section className="hero">
+        <section className="hero" ref={heroRef} onPointerMove={handleHeroPointerMove}>
+          <div className="hero-interactive" aria-hidden="true">
+            <div className="cursor-light" />
+            <div className="mesh-ring ring-one" />
+            <div className="mesh-ring ring-two" />
+            <div className="mesh-core">
+              <span>AI</span>
+              <span>API</span>
+              <span>QA</span>
+            </div>
+            <div className="mesh-line line-one" />
+            <div className="mesh-line line-two" />
+          </div>
+
           <div className="hero-content">
             <p className="hero-kicker">Software Developer | AI Automation | QA</p>
             <h1 className="hero-title">
-              <span>Building systems</span>
-              <span>that see, test,</span>
-              <span>and automate.</span>
+              <span>Systems</span>
+              <span>that think.</span>
             </h1>
             <p className="hero-copy">
               Fresh IT graduate with a 3.79 CGPA, hands-on experience in AI-powered
@@ -229,20 +256,10 @@ function App() {
             </div>
           </div>
 
-          <div className="hero-system" aria-hidden="true">
-            <div className="orbital-ring" />
-            <div className="signal-card one">
-              <span>YOLOv8</span>
-              <strong>Vision model</strong>
-            </div>
-            <div className="signal-card two">
-              <span>25%</span>
-              <strong>QA effort saved</strong>
-            </div>
-            <div className="signal-card three">
-              <span>20+</span>
-              <strong>Dashboards built</strong>
-            </div>
+          <div className="hero-meta" aria-label="Profile highlights">
+            <span>YOLOv8 + ByteTrack</span>
+            <span>25% QA effort saved</span>
+            <span>20+ dashboards</span>
           </div>
         </section>
 
