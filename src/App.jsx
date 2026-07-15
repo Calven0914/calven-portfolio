@@ -69,6 +69,24 @@ const certificates = [
   "Workflow automation and LLM integration",
 ];
 
+const heroStats = [
+  {
+    value: 40,
+    suffix: "%",
+    label: "counting accuracy improvement",
+  },
+  {
+    value: 25,
+    suffix: "%",
+    label: "QA effort saved",
+  },
+  {
+    value: 20,
+    suffix: "+",
+    label: "dashboards built",
+  },
+];
+
 const skills = [
   "Java",
   "Python",
@@ -119,6 +137,7 @@ function SocialIcon({ type }) {
 function App() {
   const rootRef = useRef(null);
   const heroRef = useRef(null);
+  const [activeSection, setActiveSection] = useState("top");
   const [formState, setFormState] = useState("idle");
   const [formMessage, setFormMessage] = useState("");
 
@@ -139,98 +158,177 @@ function App() {
     hero.style.setProperty("--pointer-y", `${event.clientY - bounds.top}px`);
   }
 
+  function handleMagneticMove(event) {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return;
+    }
+
+    const target = event.currentTarget;
+    const bounds = target.getBoundingClientRect();
+    const x = (event.clientX - bounds.left - bounds.width / 2) * 0.16;
+    const y = (event.clientY - bounds.top - bounds.height / 2) * 0.16;
+
+    target.style.setProperty("--magnetic-x", `${x}px`);
+    target.style.setProperty("--magnetic-y", `${y}px`);
+  }
+
+  function resetMagnetic(event) {
+    event.currentTarget.style.setProperty("--magnetic-x", "0px");
+    event.currentTarget.style.setProperty("--magnetic-y", "0px");
+  }
+
   useEffect(() => {
     const context = gsap.context(() => {
-      gsap.from(
-        ".hero-kicker, .hero-intro, .hero-title span, .hero-copy, .hero-actions, .profile-visual, .hero-meta",
-        {
-          y: 44,
-          autoAlpha: 0,
-          duration: 1,
-          stagger: 0.08,
-          ease: "power3.out",
-        },
-      );
+      const motion = gsap.matchMedia();
 
-      gsap.to(".mesh-ring", {
-        rotate: 360,
-        duration: 42,
-        repeat: -1,
-        ease: "none",
+      motion.add("(prefers-reduced-motion: reduce)", () => {
+        gsap.set(".reveal, .project-card, .stagger-item, .profile-visual, .hero-meta", {
+          clearProps: "all",
+          autoAlpha: 1,
+        });
       });
 
-      const storyTimeline = gsap.timeline({
-        scrollTrigger: {
-          trigger: ".story-pin",
-          start: "top top",
-          end: "+=3600",
-          pin: true,
-          scrub: 0.75,
-          anticipatePin: 1,
-        },
-      });
+      motion.add("(prefers-reduced-motion: no-preference)", () => {
+        gsap.from(
+          ".hero-kicker, .hero-intro, .hero-title span, .hero-copy, .hero-actions, .profile-visual, .hero-meta",
+          {
+            y: 28,
+            autoAlpha: 0,
+            duration: 0.36,
+            stagger: 0.08,
+            ease: "power2.out",
+          },
+        );
 
-      storyTimeline
-        .to(".story-progress", { scaleX: 1, ease: "none", duration: 1 }, 0)
-        .fromTo(
-          ".chapter-1",
-          { clipPath: "inset(0 100% 0 0)" },
-          { clipPath: "inset(0 0% 0 0)", duration: 0.22 },
-          0.03,
-        )
-        .to(".chapter-1", { yPercent: -110, autoAlpha: 0, duration: 0.18 }, 0.28)
-        .fromTo(
-          ".chapter-2",
-          { yPercent: 110, autoAlpha: 0 },
-          { yPercent: 0, autoAlpha: 1, duration: 0.22 },
-          0.32,
-        )
-        .to(".chapter-2", { yPercent: -110, autoAlpha: 0, duration: 0.18 }, 0.57)
-        .fromTo(
-          ".chapter-3",
-          { scale: 0.86, autoAlpha: 0 },
-          { scale: 1, autoAlpha: 1, duration: 0.24 },
-          0.62,
-        )
-        .to(".chapter-number", { textContent: 3, snap: { textContent: 1 }, duration: 1 }, 0);
+        gsap.to(".mesh-ring", {
+          rotate: 360,
+          duration: 42,
+          repeat: -1,
+          ease: "none",
+        });
 
-      gsap.utils.toArray(".reveal").forEach((item) => {
-        gsap.from(item, {
-          y: 56,
-          autoAlpha: 0,
-          duration: 0.8,
-          ease: "power3.out",
+        gsap.to(".hero-interactive", {
+          yPercent: 10,
+          ease: "none",
           scrollTrigger: {
-            trigger: item,
-            start: "top 82%",
+            trigger: ".hero",
+            start: "top top",
+            end: "bottom top",
+            scrub: true,
+          },
+        });
+
+        const storyTimeline = gsap.timeline({
+          scrollTrigger: {
+            trigger: ".story-pin",
+            start: "top top",
+            end: "+=2400",
+            pin: true,
+            scrub: 0.75,
+            anticipatePin: 1,
+          },
+        });
+
+        storyTimeline
+          .to(".story-progress", { scaleX: 1, ease: "none", duration: 1 }, 0)
+          .fromTo(
+            ".chapter-1",
+            { clipPath: "inset(0 100% 0 0)" },
+            { clipPath: "inset(0 0% 0 0)", duration: 0.22 },
+            0.03,
+          )
+          .to(".chapter-1", { yPercent: -110, autoAlpha: 0, duration: 0.18 }, 0.28)
+          .fromTo(
+            ".chapter-2",
+            { yPercent: 110, autoAlpha: 0 },
+            { yPercent: 0, autoAlpha: 1, duration: 0.22 },
+            0.32,
+          )
+          .to(".chapter-2", { yPercent: -110, autoAlpha: 0, duration: 0.18 }, 0.57)
+          .fromTo(
+            ".chapter-3",
+            { scale: 0.92, autoAlpha: 0 },
+            { scale: 1, autoAlpha: 1, duration: 0.24 },
+            0.62,
+          )
+          .to(".chapter-number", { textContent: 3, snap: { textContent: 1 }, duration: 1 }, 0);
+
+        gsap.utils.toArray(".reveal").forEach((item) => {
+          gsap.from(item, {
+            y: 28,
+            autoAlpha: 0,
+            duration: 0.38,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: item,
+              start: "top 90%",
+            },
+          });
+        });
+
+        gsap.utils.toArray(".stagger-group").forEach((group) => {
+          gsap.from(gsap.utils.toArray(".stagger-item", group), {
+            y: 24,
+            autoAlpha: 0,
+            duration: 0.34,
+            stagger: 0.08,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: group,
+              start: "top 88%",
+            },
+          });
+        });
+
+        gsap.utils.toArray("[data-count]").forEach((counter) => {
+          const target = Number(counter.dataset.count || 0);
+          const suffix = counter.dataset.suffix || "";
+          const counterState = { value: 0 };
+
+          gsap.to(counterState, {
+              value: target,
+              duration: 0.38,
+              ease: "power1.out",
+              scrollTrigger: {
+                trigger: counter,
+                start: "top 88%",
+                once: true,
+              },
+              onUpdate() {
+                counter.textContent = `${Math.round(counterState.value)}${suffix}`;
+              },
+              onComplete() {
+                counter.textContent = `${target}${suffix}`;
+              },
+            });
+        });
+
+        gsap.to(".skill-track", {
+          xPercent: -50,
+          ease: "none",
+          scrollTrigger: {
+            trigger: ".skills-marquee",
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 0.8,
           },
         });
       });
 
-      gsap.utils.toArray(".project-card").forEach((card, index) => {
-        gsap.from(card, {
-          xPercent: index % 2 === 0 ? -8 : 8,
-          y: 42,
-          autoAlpha: 0,
-          duration: 0.75,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: card,
-            start: "top 78%",
+      gsap.utils.toArray("[data-section]").forEach((section) => {
+        ScrollTrigger.create({
+          trigger: section,
+          start: "top center",
+          end: "bottom center",
+          onToggle: (self) => {
+            if (self.isActive) {
+              setActiveSection(section.id);
+            }
           },
         });
       });
 
-      gsap.to(".skill-track", {
-        xPercent: -50,
-        ease: "none",
-        scrollTrigger: {
-          trigger: ".skills-marquee",
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 0.8,
-        },
-      });
+      return () => motion.revert();
     }, rootRef);
 
     return () => context.revert();
@@ -270,16 +368,29 @@ function App() {
     <div className="site" ref={rootRef}>
       <header className="nav">
         <nav aria-label="Primary navigation">
-          <a href="#top">Home</a>
-          <a href="#story">Story</a>
-          <a href="#education">Education</a>
-          <a href="#projects">Projects</a>
-          <a href="#contact">Contact</a>
+          {[
+            ["top", "Home"],
+            ["story", "Story"],
+            ["experience", "Experience"],
+            ["education", "Education"],
+            ["projects", "Projects"],
+            ["contact", "Contact"],
+          ].map(([id, label]) => (
+            <a className={activeSection === id ? "is-active" : ""} href={`#${id}`} key={id}>
+              {label}
+            </a>
+          ))}
         </nav>
       </header>
 
-      <main id="top">
-        <section className="hero" ref={heroRef} onPointerMove={handleHeroPointerMove}>
+      <main>
+        <section
+          className="hero"
+          data-section
+          id="top"
+          ref={heroRef}
+          onPointerMove={handleHeroPointerMove}
+        >
           <div className="hero-interactive" aria-hidden="true">
             <div className="cursor-light" />
             <div className="mesh-ring ring-one" />
@@ -301,14 +412,30 @@ function App() {
               quality. Based in Malaysia and ready for software developer roles.
             </p>
             <div className="hero-actions">
-              <a className="button dark" href="#projects">View work</a>
-              <a className="button light" href="#contact">Contact me</a>
+              <a
+                className="button dark magnetic"
+                href="#projects"
+                onPointerLeave={resetMagnetic}
+                onPointerMove={handleMagneticMove}
+              >
+                View work
+              </a>
+              <a
+                className="button light magnetic"
+                href="#contact"
+                onPointerLeave={resetMagnetic}
+                onPointerMove={handleMagneticMove}
+              >
+                Contact me
+              </a>
               <div className="social-links" aria-label="Social links">
                 {socials.map((social) => (
                   <a
-                    className="social-link"
+                    className="social-link magnetic"
                     href={social.href}
                     key={social.name}
+                    onPointerLeave={resetMagnetic}
+                    onPointerMove={handleMagneticMove}
                     target="_blank"
                     rel="noreferrer"
                     aria-label={social.name}
@@ -324,7 +451,7 @@ function App() {
             <div className="profile-orbit" aria-hidden="true" />
             <div className="profile-card">
               <div className="profile-image">
-                <span>CC</span>
+                <img src="/profile.jpeg" alt="Illustrated portrait of Calven Chow" />
               </div>
               <div className="profile-card-copy">
                 <p>Available for software developer roles</p>
@@ -334,13 +461,23 @@ function App() {
           </aside>
 
           <div className="hero-meta" aria-label="Profile highlights">
-            <span>YOLOv8 + ByteTrack</span>
-            <span>25% QA effort saved</span>
-            <span>20+ dashboards</span>
+            {heroStats.map((stat) => (
+              <span className="stat-pill" key={stat.label}>
+                <strong data-count={stat.value} data-suffix={stat.suffix}>
+                  0{stat.suffix}
+                </strong>
+                {stat.label}
+              </span>
+            ))}
           </div>
         </section>
 
-        <section id="story" className="story-pin" aria-label="Pinned profile story">
+        <section
+          id="story"
+          className="story-pin"
+          data-section
+          aria-label="Pinned profile story"
+        >
           <div className="story-meta">
             <p className="eyebrow">Profile sequence</p>
             <span className="chapter-number">1</span>
@@ -380,14 +517,14 @@ function App() {
           </div>
         </section>
 
-        <section className="experience-section">
+        <section id="experience" className="experience-section" data-section>
           <div className="section-heading reveal">
             <p className="eyebrow">Experience</p>
             <h2>Internships with practical delivery.</h2>
           </div>
-          <div className="experience-list">
+          <div className="experience-list stagger-group">
             {experiences.map((item) => (
-              <article className="experience-item reveal" key={item.role}>
+              <article className="experience-item stagger-item" key={item.role}>
                 <div>
                   <p>{item.date}</p>
                   <h3>{item.role}</h3>
@@ -401,15 +538,15 @@ function App() {
           </div>
         </section>
 
-        <section id="education" className="education-section">
+        <section id="education" className="education-section" data-section>
           <div className="section-heading reveal">
             <p className="eyebrow">Education & credentials</p>
             <h2>Academic foundation with practical proof.</h2>
           </div>
           <div className="education-layout">
-            <div className="education-list">
+            <div className="education-list stagger-group">
               {education.map((item) => (
-                <article className="education-card reveal" key={item.credential}>
+                <article className="education-card stagger-item" key={item.credential}>
                   <span>{item.date}</span>
                   <h3>{item.credential}</h3>
                   <p className="school-name">{item.school}</p>
@@ -426,8 +563,10 @@ function App() {
                 ))}
               </div>
               <a
-                className="inline-social"
+                className="inline-social magnetic"
                 href="https://www.linkedin.com/in/calven-chow-kai-wen-03703727a/"
+                onPointerLeave={resetMagnetic}
+                onPointerMove={handleMagneticMove}
                 target="_blank"
                 rel="noreferrer"
               >
@@ -438,14 +577,14 @@ function App() {
           </div>
         </section>
 
-        <section id="projects" className="projects-section">
+        <section id="projects" className="projects-section" data-section>
           <div className="section-heading reveal">
             <p className="eyebrow">Selected work</p>
             <h2>Projects with measurable behavior.</h2>
           </div>
-          <div className="projects">
+          <div className="projects stagger-group">
             {projects.map((project) => (
-              <article className="project-card" key={project.title}>
+              <article className="project-card stagger-item" key={project.title}>
                 <div className="project-index">{project.index}</div>
                 <div className="project-main">
                   <p>{project.stack}</p>
@@ -461,21 +600,21 @@ function App() {
           </div>
         </section>
 
-        <section className="skills-section" aria-label="Technical skills">
+        <section className="skills-section" id="skills" aria-label="Technical skills">
           <div className="section-heading reveal">
             <p className="eyebrow">Skill map</p>
             <h2>Backend, AI, automation, and product UI.</h2>
           </div>
           <div className="skills-marquee" aria-hidden="true">
-            <div className="skill-track">
+            <div className="skill-track stagger-group">
               {[...skills, ...skills].map((skill, index) => (
-                <span key={`${skill}-${index}`}>{skill}</span>
+                <span className="stagger-item" key={`${skill}-${index}`}>{skill}</span>
               ))}
             </div>
           </div>
         </section>
 
-        <section id="contact" className="contact-section">
+        <section id="contact" className="contact-section" data-section>
           <div className="contact-copy reveal">
             <p className="eyebrow">Contact</p>
             <h2>Let's build something useful.</h2>
@@ -488,9 +627,11 @@ function App() {
             <div className="contact-socials" aria-label="Social links">
               {socials.map((social) => (
                 <a
-                  className="social-link"
+                  className="social-link magnetic"
                   href={social.href}
                   key={social.name}
+                  onPointerLeave={resetMagnetic}
+                  onPointerMove={handleMagneticMove}
                   target="_blank"
                   rel="noreferrer"
                   aria-label={social.name}
@@ -514,7 +655,13 @@ function App() {
               Message
               <textarea name="message" rows="5" required />
             </label>
-            <button type="submit" disabled={formState === "sending"}>
+            <button
+              className="magnetic"
+              type="submit"
+              disabled={formState === "sending"}
+              onPointerLeave={resetMagnetic}
+              onPointerMove={handleMagneticMove}
+            >
               {formState === "sending" ? "Sending..." : "Send message"}
             </button>
             {formMessage && <p className={`form-note ${formState}`}>{formMessage}</p>}

@@ -4,7 +4,8 @@
     Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     sans-serif;
   --ink: #f7fbff;
-  --muted: #a9b6c8;
+  --muted: #c6d1df;
+  --soft: #dde6f2;
   --deep: #080b12;
   --panel: #101722;
   --line: rgba(255, 255, 255, 0.14);
@@ -73,6 +74,7 @@ a {
 }
 
 .nav nav {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -84,10 +86,12 @@ a {
   box-shadow: 0 18px 60px rgba(0, 0, 0, 0.22);
   backdrop-filter: blur(20px);
   pointer-events: auto;
+  scrollbar-width: none;
 }
 
 .nav nav a {
-  color: rgba(247, 251, 255, 0.82);
+  position: relative;
+  color: rgba(247, 251, 255, 0.88);
   font-size: clamp(1rem, 1.6vw, 1.22rem);
   font-weight: 850;
   transition:
@@ -95,9 +99,21 @@ a {
     transform 180ms ease;
 }
 
-.nav nav a:hover {
+.nav nav a:hover,
+.nav nav a.is-active {
   color: var(--ink);
   transform: translateY(-1px);
+}
+
+.nav nav a.is-active::after {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -10px;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--teal), var(--lime));
+  content: "";
 }
 
 .hero,
@@ -123,7 +139,7 @@ a {
   gap: clamp(28px, 6vw, 96px);
   overflow: hidden;
   padding-top: 104px;
-  padding-bottom: 40px;
+  padding-bottom: clamp(56px, 8vw, 96px);
 }
 
 .hero::before {
@@ -272,6 +288,8 @@ p {
 
 .button,
 .contact-form button {
+  --magnetic-x: 0px;
+  --magnetic-y: 0px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -282,6 +300,11 @@ p {
   font: inherit;
   font-weight: 850;
   cursor: pointer;
+  transform: translate3d(var(--magnetic-x), var(--magnetic-y), 0);
+  transition:
+    transform 160ms ease,
+    background 160ms ease,
+    border-color 160ms ease;
 }
 
 .button.dark,
@@ -310,6 +333,8 @@ p {
 
 .social-link,
 .inline-social {
+  --magnetic-x: 0px;
+  --magnetic-y: 0px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -318,9 +343,10 @@ p {
   background: rgba(255, 255, 255, 0.07);
   color: var(--ink);
   transition:
-    transform 180ms ease,
+    transform 160ms ease,
     background 180ms ease,
     border-color 180ms ease;
+  transform: translate3d(var(--magnetic-x), var(--magnetic-y), 0);
 }
 
 .social-link {
@@ -337,7 +363,7 @@ p {
 
 .social-link:hover,
 .inline-social:hover {
-  transform: translateY(-2px);
+  transform: translate3d(var(--magnetic-x), calc(var(--magnetic-y) - 2px), 0);
   border-color: rgba(29, 227, 194, 0.56);
   background: rgba(29, 227, 194, 0.1);
 }
@@ -379,8 +405,6 @@ p {
 }
 
 .profile-image {
-  display: grid;
-  place-items: center;
   aspect-ratio: 4 / 5;
   overflow: hidden;
   border-radius: 20px;
@@ -390,18 +414,12 @@ p {
     #111827;
 }
 
-.profile-image span {
-  display: grid;
-  place-items: center;
-  width: 42%;
-  aspect-ratio: 1;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 50%;
-  background: rgba(8, 11, 18, 0.54);
-  color: var(--ink);
-  font-size: clamp(3rem, 8vw, 5.7rem);
-  font-weight: 950;
-  backdrop-filter: blur(16px);
+.profile-image img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: 50% 42%;
 }
 
 .profile-card-copy {
@@ -443,10 +461,17 @@ p {
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 999px;
   background: rgba(8, 11, 18, 0.42);
-  color: rgba(247, 251, 255, 0.82);
+  color: var(--soft);
   font-size: 0.92rem;
   font-weight: 820;
   backdrop-filter: blur(18px);
+}
+
+.hero-meta strong {
+  margin-right: 6px;
+  color: var(--ink);
+  font-size: 1.06rem;
+  font-weight: 950;
 }
 
 .story-pin {
@@ -462,7 +487,7 @@ p {
 }
 
 .story-pin p {
-  color: #516174;
+  color: #334155;
 }
 
 .story-meta {
@@ -515,7 +540,7 @@ p {
 .projects-section,
 .skills-section,
 .contact-section {
-  padding-block: clamp(90px, 14vw, 170px);
+  padding-block: clamp(96px, 10vw, 128px);
 }
 
 .section-heading {
@@ -591,7 +616,7 @@ p {
   padding: 10px 12px;
   border: 1px solid var(--line);
   border-radius: 999px;
-  color: var(--muted);
+  color: var(--soft);
   font-size: 0.92rem;
   font-weight: 760;
 }
@@ -648,7 +673,7 @@ p {
 .project-main span {
   display: block;
   max-width: 68ch;
-  color: var(--muted);
+  color: var(--soft);
   line-height: 1.7;
 }
 
@@ -660,7 +685,7 @@ p {
 }
 
 .project-metric span {
-  color: var(--muted);
+  color: var(--soft);
   font-weight: 780;
 }
 
@@ -671,7 +696,7 @@ p {
 }
 
 .skills-section p {
-  color: #516174;
+  color: #334155;
 }
 
 .skills-marquee {
@@ -785,8 +810,17 @@ p {
 
   .hero {
     padding-top: 142px;
+    padding-bottom: 64px;
     align-items: flex-start;
     gap: 36px;
+  }
+
+  .experience-section,
+  .education-section,
+  .projects-section,
+  .skills-section,
+  .contact-section {
+    padding-block: 64px;
   }
 
   .hero-content {
@@ -861,5 +895,28 @@ p {
 
   .profile-card {
     width: min(100%, 300px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+
+  .button,
+  .contact-form button,
+  .social-link,
+  .inline-social,
+  .profile-card,
+  .profile-orbit,
+  .mesh-ring,
+  .mesh-line,
+  .hero::before {
+    transform: none !important;
   }
 }

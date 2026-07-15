@@ -9,12 +9,12 @@ export default async function handler(request, response) {
   }
 
   const supabaseUrl = process.env.SUPABASE_URL;
-  const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const supabaseKey = process.env.SUPABASE_ANON_KEY;
 
   if (!supabaseUrl || !supabaseKey) {
     return response.status(500).json({
       error:
-        "Supabase is not configured. Set SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in Vercel.",
+        "Supabase is not configured. Set SUPABASE_URL and SUPABASE_ANON_KEY in Vercel.",
     });
   }
 

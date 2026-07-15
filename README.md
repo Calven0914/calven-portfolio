@@ -25,19 +25,31 @@ create table if not exists public.contact_messages (
   message text not null,
   source text default 'portfolio'
 );
+
+alter table public.contact_messages enable row level security;
+
+create policy "Anyone can submit contact messages"
+on public.contact_messages
+for insert
+to anon
+with check (
+  length(name) between 1 and 120
+  and email ~* '^[^@\s]+@[^@\s]+\.[^@\s]+$'
+  and length(message) between 1 and 4000
+);
 ```
 
 The Vercel API route expects these environment variables:
 
 ```bash
 SUPABASE_URL=https://your-project.supabase.co
-SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
+SUPABASE_ANON_KEY=your-public-anon-key
 ```
 
 ## Deploy on Vercel
 
 1. Import the GitHub repository into Vercel.
-2. Add `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` in Project Settings.
+2. Add `SUPABASE_URL` and `SUPABASE_ANON_KEY` in Project Settings.
 3. Deploy with the default Vite settings.
 
 The contact form posts to `/api/contact`, which writes into Supabase from the
