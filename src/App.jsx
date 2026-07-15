@@ -336,10 +336,11 @@ function App() {
 
   async function handleSubmit(event) {
     event.preventDefault();
+    const form = event.currentTarget;
     setFormState("sending");
-    setFormMessage("");
+    setFormMessage("Sending your message...");
 
-    const formData = new FormData(event.currentTarget);
+    const formData = new FormData(form);
     const payload = Object.fromEntries(formData.entries());
 
     try {
@@ -355,9 +356,9 @@ function App() {
         throw new Error(result.error || "The message could not be sent.");
       }
 
-      event.currentTarget.reset();
+      form.reset();
       setFormState("sent");
-      setFormMessage("Message saved. Thanks for reaching out.");
+      setFormMessage("Message sent successfully. Thanks for reaching out.");
     } catch (error) {
       setFormState("error");
       setFormMessage(error instanceof Error ? error.message : "Something went wrong.");
@@ -366,6 +367,12 @@ function App() {
 
   return (
     <div className="site" ref={rootRef}>
+      {formMessage && (
+        <div className={`toast-notification ${formState}`} role="status" aria-live="polite">
+          <span>{formState === "error" ? "!" : formState === "sent" ? "✓" : "…"}</span>
+          <p>{formMessage}</p>
+        </div>
+      )}
       <header className="nav">
         <nav aria-label="Primary navigation">
           {[
@@ -664,7 +671,6 @@ function App() {
             >
               {formState === "sending" ? "Sending..." : "Send message"}
             </button>
-            {formMessage && <p className={`form-note ${formState}`}>{formMessage}</p>}
           </form>
         </section>
       </main>

@@ -60,6 +60,53 @@ a {
   text-decoration: none;
 }
 
+.toast-notification {
+  position: fixed;
+  z-index: 80;
+  right: clamp(18px, 4vw, 42px);
+  bottom: clamp(18px, 4vw, 42px);
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  width: min(calc(100vw - 36px), 420px);
+  padding: 14px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 12px;
+  background: rgba(8, 11, 18, 0.88);
+  box-shadow: 0 26px 90px rgba(0, 0, 0, 0.42);
+  backdrop-filter: blur(22px);
+}
+
+.toast-notification span {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: rgba(29, 227, 194, 0.14);
+  color: var(--teal);
+  font-weight: 950;
+}
+
+.toast-notification p {
+  margin: 0;
+  color: var(--ink);
+  font-size: 0.96rem;
+  font-weight: 780;
+  line-height: 1.45;
+}
+
+.toast-notification.error span {
+  background: rgba(255, 123, 100, 0.16);
+  color: var(--coral);
+}
+
+.toast-notification.sending span {
+  background: rgba(122, 168, 255, 0.16);
+  color: var(--blue);
+}
+
 .nav {
   position: fixed;
   z-index: 50;
@@ -779,19 +826,6 @@ p {
 .contact-form button:disabled {
   cursor: wait;
   opacity: 0.65;
-}
-
-.form-note {
-  margin: 0;
-  font-weight: 780;
-}
-
-.form-note.sent {
-  color: var(--teal);
-}
-
-.form-note.error {
-  color: var(--coral);
 }
 
 @media (max-width: 900px) {
