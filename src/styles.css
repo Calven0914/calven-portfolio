@@ -103,6 +103,7 @@ a {
 .hero,
 .story-pin,
 .experience-section,
+.education-section,
 .projects-section,
 .skills-section,
 .contact-section {
@@ -116,8 +117,10 @@ a {
   --pointer-y: 50%;
   position: relative;
   min-height: 100svh;
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 0.96fr) minmax(300px, 0.74fr);
   align-items: center;
+  gap: clamp(28px, 6vw, 96px);
   overflow: hidden;
   padding-top: 104px;
   padding-bottom: 40px;
@@ -151,7 +154,7 @@ a {
   border-radius: 50%;
   background: radial-gradient(circle, rgba(216, 255, 101, 0.26), rgba(29, 227, 194, 0.14) 38%, transparent 70%);
   filter: blur(22px);
-  opacity: 0.9;
+  opacity: 0.55;
   transform: translate(-50%, -50%);
   transition:
     left 120ms ease-out,
@@ -160,7 +163,7 @@ a {
 
 .mesh-ring {
   position: absolute;
-  right: clamp(-160px, -6vw, -40px);
+  right: clamp(-220px, -10vw, -80px);
   top: 50%;
   width: min(78vw, 760px);
   aspect-ratio: 1;
@@ -170,39 +173,14 @@ a {
     radial-gradient(circle at 50% 50%, rgba(8, 11, 18, 0.72) 0 34%, transparent 35%),
     conic-gradient(from 90deg, rgba(29, 227, 194, 0.9), rgba(122, 168, 255, 0.22), rgba(255, 123, 100, 0.72), rgba(216, 255, 101, 0.2), rgba(29, 227, 194, 0.9));
   mask-image: radial-gradient(circle, transparent 0 45%, black 46% 49%, transparent 50% 58%, black 59% 60%, transparent 61%);
-  opacity: 0.72;
+  opacity: 0.42;
   transform: translate3d(calc(var(--mouse-x) * 44px), calc(-50% + var(--mouse-y) * 36px), 0) rotateX(calc(var(--mouse-y) * 12deg)) rotateY(calc(var(--mouse-x) * -16deg));
 }
 
 .ring-two {
   right: clamp(20px, 12vw, 180px);
   width: min(48vw, 430px);
-  opacity: 0.48;
-}
-
-.mesh-core {
-  position: absolute;
-  right: clamp(34px, 16vw, 290px);
-  top: 50%;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  transform: translate3d(calc(var(--mouse-x) * -36px), calc(-50% + var(--mouse-y) * -28px), 0) rotateX(calc(var(--mouse-y) * -10deg)) rotateY(calc(var(--mouse-x) * 14deg));
-}
-
-.mesh-core span {
-  display: grid;
-  place-items: center;
-  width: clamp(66px, 9vw, 104px);
-  aspect-ratio: 1;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 18px;
-  background: rgba(247, 251, 255, 0.08);
-  color: var(--ink);
-  font-size: clamp(1rem, 2vw, 1.45rem);
-  font-weight: 950;
-  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.32);
-  backdrop-filter: blur(18px);
+  opacity: 0.25;
 }
 
 .mesh-line {
@@ -234,6 +212,14 @@ a {
   text-transform: uppercase;
 }
 
+.hero-intro {
+  margin-bottom: 16px;
+  color: var(--ink);
+  font-size: clamp(1.35rem, 3vw, 2.35rem);
+  font-weight: 850;
+  line-height: 1.1;
+}
+
 .hero-title,
 h2,
 h3,
@@ -242,10 +228,10 @@ p {
 }
 
 .hero-title {
-  max-width: 9ch;
+  max-width: 10ch;
   margin-bottom: 26px;
-  font-size: clamp(4.4rem, 13vw, 12rem);
-  line-height: 0.8;
+  font-size: clamp(3.8rem, 9.8vw, 9.6rem);
+  line-height: 0.86;
 }
 
 .hero-title span {
@@ -278,6 +264,7 @@ p {
 
 .hero-actions {
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
   gap: 12px;
   margin-top: 34px;
@@ -312,6 +299,128 @@ p {
   position: relative;
   z-index: 2;
   width: min(100%, 980px);
+}
+
+.social-links,
+.contact-socials {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.social-link,
+.inline-social {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.07);
+  color: var(--ink);
+  transition:
+    transform 180ms ease,
+    background 180ms ease,
+    border-color 180ms ease;
+}
+
+.social-link {
+  width: 48px;
+  height: 48px;
+}
+
+.social-link svg,
+.inline-social svg {
+  width: 21px;
+  height: 21px;
+  fill: currentColor;
+}
+
+.social-link:hover,
+.inline-social:hover {
+  transform: translateY(-2px);
+  border-color: rgba(29, 227, 194, 0.56);
+  background: rgba(29, 227, 194, 0.1);
+}
+
+.profile-visual {
+  position: relative;
+  z-index: 2;
+  min-height: 560px;
+  display: grid;
+  place-items: center;
+  perspective: 1200px;
+}
+
+.profile-orbit {
+  position: absolute;
+  width: min(56vw, 500px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, transparent 0 44%, rgba(29, 227, 194, 0.16) 45% 47%, transparent 48% 58%, rgba(255, 123, 100, 0.16) 59% 61%, transparent 62%),
+    conic-gradient(from 90deg, rgba(29, 227, 194, 0.68), rgba(122, 168, 255, 0.18), rgba(255, 123, 100, 0.62), rgba(216, 255, 101, 0.16), rgba(29, 227, 194, 0.68));
+  filter: blur(0.2px);
+  opacity: 0.72;
+  transform: translate3d(calc(var(--mouse-x) * 34px), calc(var(--mouse-y) * 28px), 0) rotateX(calc(var(--mouse-y) * 12deg)) rotateY(calc(var(--mouse-x) * -14deg));
+}
+
+.profile-card {
+  position: relative;
+  display: grid;
+  gap: 18px;
+  width: min(100%, 390px);
+  padding: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 28px;
+  background: rgba(8, 11, 18, 0.58);
+  box-shadow: 0 34px 120px rgba(0, 0, 0, 0.42);
+  backdrop-filter: blur(24px);
+  transform: translate3d(calc(var(--mouse-x) * -28px), calc(var(--mouse-y) * -22px), 0) rotateX(calc(var(--mouse-y) * -8deg)) rotateY(calc(var(--mouse-x) * 10deg));
+}
+
+.profile-image {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at 28% 22%, rgba(216, 255, 101, 0.32), transparent 28%),
+    linear-gradient(145deg, rgba(29, 227, 194, 0.38), rgba(122, 168, 255, 0.16) 45%, rgba(255, 123, 100, 0.34)),
+    #111827;
+}
+
+.profile-image span {
+  display: grid;
+  place-items: center;
+  width: 42%;
+  aspect-ratio: 1;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  background: rgba(8, 11, 18, 0.54);
+  color: var(--ink);
+  font-size: clamp(3rem, 8vw, 5.7rem);
+  font-weight: 950;
+  backdrop-filter: blur(16px);
+}
+
+.profile-card-copy {
+  padding: 0 4px 4px;
+}
+
+.profile-card-copy p {
+  margin-bottom: 6px;
+  color: var(--teal);
+  font-size: 0.88rem;
+  font-weight: 860;
+  text-transform: uppercase;
+}
+
+.profile-card-copy strong {
+  display: block;
+  color: var(--ink);
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  line-height: 1.25;
 }
 
 .hero-meta {
@@ -402,6 +511,7 @@ p {
 }
 
 .experience-section,
+.education-section,
 .projects-section,
 .skills-section,
 .contact-section {
@@ -416,6 +526,83 @@ p {
 .experience-list {
   display: grid;
   gap: 14px;
+}
+
+.education-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.48fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.education-list {
+  display: grid;
+  gap: 14px;
+}
+
+.education-card,
+.certificate-panel {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.055);
+  box-shadow: 0 22px 80px rgba(0, 0, 0, 0.18);
+}
+
+.education-card {
+  padding: clamp(22px, 4vw, 34px);
+}
+
+.education-card span,
+.panel-label {
+  display: block;
+  margin-bottom: 14px;
+  color: var(--coral);
+  font-size: 0.82rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.school-name {
+  margin-bottom: 10px;
+  color: var(--teal);
+  font-weight: 850;
+}
+
+.certificate-panel {
+  position: sticky;
+  top: 120px;
+  display: grid;
+  gap: 18px;
+  padding: clamp(22px, 4vw, 34px);
+}
+
+.certificate-panel h3 {
+  font-size: clamp(1.6rem, 3vw, 2.5rem);
+}
+
+.certificate-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.certificate-tags span {
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 0.92rem;
+  font-weight: 760;
+}
+
+.inline-social {
+  justify-content: flex-start;
+  gap: 10px;
+  width: fit-content;
+  min-height: 48px;
+  padding: 0 14px;
+  font-weight: 850;
 }
 
 .experience-item {
@@ -521,11 +708,15 @@ p {
   align-items: start;
 }
 
-.contact-copy a {
+.contact-copy > a[href^="mailto"] {
   display: inline-flex;
   margin-top: 18px;
   color: var(--teal);
   font-weight: 850;
+}
+
+.contact-socials {
+  margin-top: 18px;
 }
 
 .contact-form {
@@ -585,6 +776,7 @@ p {
 
   .hero,
   .story-pin,
+  .education-layout,
   .experience-item,
   .project-card,
   .contact-section {
@@ -594,10 +786,20 @@ p {
   .hero {
     padding-top: 142px;
     align-items: flex-start;
+    gap: 36px;
   }
 
   .hero-content {
-    padding-top: 10vh;
+    padding-top: 5vh;
+  }
+
+  .profile-visual {
+    min-height: 460px;
+    width: 100%;
+  }
+
+  .profile-card {
+    width: min(100%, 340px);
   }
 
   .chapter {
@@ -618,9 +820,9 @@ p {
     width: 660px;
   }
 
-  .mesh-core {
-    right: 28px;
-    top: 72%;
+  .certificate-panel {
+    position: relative;
+    top: auto;
   }
 
   .hero-meta {
@@ -653,7 +855,11 @@ p {
     width: 100%;
   }
 
-  .mesh-core span {
-    width: 64px;
+  .profile-visual {
+    min-height: 400px;
+  }
+
+  .profile-card {
+    width: min(100%, 300px);
   }
 }

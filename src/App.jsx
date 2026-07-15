@@ -48,6 +48,27 @@ const experiences = [
   },
 ];
 
+const education = [
+  {
+    credential: "Bachelor's in Information Technology (Software Engineering)",
+    school: "SEGi University Kota Damansara",
+    date: "2024 - 2026",
+    detail: "CGPA 3.79. Project leader for PAWS Charity Fundraiser, raising RM500 for SPCA Selangor.",
+  },
+  {
+    credential: "Diploma in Information Technology",
+    school: "SEGi College Kota Damansara",
+    date: "2021 - 2023",
+    detail: "CGPA 3.62 with a foundation in software development, databases, and IT systems.",
+  },
+];
+
+const certificates = [
+  "Software Engineering",
+  "AI and computer vision projects",
+  "Workflow automation and LLM integration",
+];
+
 const skills = [
   "Java",
   "Python",
@@ -65,6 +86,35 @@ const skills = [
   "CI/CD",
   "Agile",
 ];
+
+const socials = [
+  {
+    name: "LinkedIn",
+    href: "https://www.linkedin.com/in/calven-chow-kai-wen-03703727a/",
+    icon: "linkedin",
+  },
+  {
+    name: "GitHub",
+    href: "https://github.com/Calven0914",
+    icon: "github",
+  },
+];
+
+function SocialIcon({ type }) {
+  if (type === "github") {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.49 2.87 8.3 6.84 9.68.5.1.68-.22.68-.49v-1.82c-2.78.62-3.37-1.21-3.37-1.21-.45-1.19-1.11-1.5-1.11-1.5-.91-.64.07-.63.07-.63 1 .07 1.53 1.06 1.53 1.06.9 1.57 2.35 1.12 2.92.85.09-.67.35-1.12.63-1.38-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.31.1-2.72 0 0 .84-.28 2.75 1.05A9.3 9.3 0 0 1 12 6.98c.85 0 1.7.12 2.5.34 1.9-1.33 2.74-1.05 2.74-1.05.55 1.41.2 2.46.1 2.72.64.72 1.03 1.64 1.03 2.76 0 3.94-2.34 4.81-4.57 5.06.36.32.68.95.68 1.92v2.84c0 .27.18.59.69.49A10.1 10.1 0 0 0 22 12.26C22 6.58 17.52 2 12 2Z" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M5.38 8.95h3.4V20h-3.4V8.95ZM7.08 4a1.98 1.98 0 1 1 0 3.96A1.98 1.98 0 0 1 7.08 4Zm3.85 4.95h3.26v1.51h.05c.45-.86 1.57-1.77 3.23-1.77 3.46 0 4.1 2.28 4.1 5.24V20h-3.4v-5.37c0-1.28-.02-2.92-1.78-2.92-1.78 0-2.05 1.39-2.05 2.83V20h-3.4V8.95Z" />
+    </svg>
+  );
+}
 
 function App() {
   const rootRef = useRef(null);
@@ -91,13 +141,16 @@ function App() {
 
   useEffect(() => {
     const context = gsap.context(() => {
-      gsap.from(".hero-kicker, .hero-title span, .hero-copy, .hero-actions, .hero-meta", {
-        y: 44,
-        autoAlpha: 0,
-        duration: 1,
-        stagger: 0.08,
-        ease: "power3.out",
-      });
+      gsap.from(
+        ".hero-kicker, .hero-intro, .hero-title span, .hero-copy, .hero-actions, .profile-visual, .hero-meta",
+        {
+          y: 44,
+          autoAlpha: 0,
+          duration: 1,
+          stagger: 0.08,
+          ease: "power3.out",
+        },
+      );
 
       gsap.to(".mesh-ring", {
         rotate: 360,
@@ -219,6 +272,7 @@ function App() {
         <nav aria-label="Primary navigation">
           <a href="#top">Home</a>
           <a href="#story">Story</a>
+          <a href="#education">Education</a>
           <a href="#projects">Projects</a>
           <a href="#contact">Contact</a>
         </nav>
@@ -230,20 +284,16 @@ function App() {
             <div className="cursor-light" />
             <div className="mesh-ring ring-one" />
             <div className="mesh-ring ring-two" />
-            <div className="mesh-core">
-              <span>AI</span>
-              <span>API</span>
-              <span>QA</span>
-            </div>
             <div className="mesh-line line-one" />
             <div className="mesh-line line-two" />
           </div>
 
           <div className="hero-content">
             <p className="hero-kicker">Software Developer | AI Automation | QA</p>
+            <p className="hero-intro">Hi, I'm Calven Chow Kai Wen.</p>
             <h1 className="hero-title">
-              <span>Systems</span>
-              <span>that think.</span>
+              <span>I build</span>
+              <span>intelligent software.</span>
             </h1>
             <p className="hero-copy">
               Fresh IT graduate with a 3.79 CGPA, hands-on experience in AI-powered
@@ -253,8 +303,35 @@ function App() {
             <div className="hero-actions">
               <a className="button dark" href="#projects">View work</a>
               <a className="button light" href="#contact">Contact me</a>
+              <div className="social-links" aria-label="Social links">
+                {socials.map((social) => (
+                  <a
+                    className="social-link"
+                    href={social.href}
+                    key={social.name}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={social.name}
+                  >
+                    <SocialIcon type={social.icon} />
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
+
+          <aside className="profile-visual" aria-label="Calven profile preview">
+            <div className="profile-orbit" aria-hidden="true" />
+            <div className="profile-card">
+              <div className="profile-image">
+                <span>CC</span>
+              </div>
+              <div className="profile-card-copy">
+                <p>Available for software developer roles</p>
+                <strong>AI apps, automation, backend systems, QA</strong>
+              </div>
+            </div>
+          </aside>
 
           <div className="hero-meta" aria-label="Profile highlights">
             <span>YOLOv8 + ByteTrack</span>
@@ -324,6 +401,43 @@ function App() {
           </div>
         </section>
 
+        <section id="education" className="education-section">
+          <div className="section-heading reveal">
+            <p className="eyebrow">Education & credentials</p>
+            <h2>Academic foundation with practical proof.</h2>
+          </div>
+          <div className="education-layout">
+            <div className="education-list">
+              {education.map((item) => (
+                <article className="education-card reveal" key={item.credential}>
+                  <span>{item.date}</span>
+                  <h3>{item.credential}</h3>
+                  <p className="school-name">{item.school}</p>
+                  <p>{item.detail}</p>
+                </article>
+              ))}
+            </div>
+            <aside className="certificate-panel reveal">
+              <p className="panel-label">LinkedIn profile focus</p>
+              <h3>Certificates and updates can live here.</h3>
+              <div className="certificate-tags">
+                {certificates.map((certificate) => (
+                  <span key={certificate}>{certificate}</span>
+                ))}
+              </div>
+              <a
+                className="inline-social"
+                href="https://www.linkedin.com/in/calven-chow-kai-wen-03703727a/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <SocialIcon type="linkedin" />
+                View LinkedIn profile
+              </a>
+            </aside>
+          </div>
+        </section>
+
         <section id="projects" className="projects-section">
           <div className="section-heading reveal">
             <p className="eyebrow">Selected work</p>
@@ -364,13 +478,27 @@ function App() {
         <section id="contact" className="contact-section">
           <div className="contact-copy reveal">
             <p className="eyebrow">Contact</p>
-            <h2>Let’s build something useful.</h2>
+            <h2>Let's build something useful.</h2>
             <p>
-              I’m looking for software developer opportunities where I can contribute
+              I'm looking for software developer opportunities where I can contribute
               across backend systems, automation, AI-assisted workflows, and clean user
               interfaces.
             </p>
             <a href="mailto:calvenc0914@gmail.com">calvenc0914@gmail.com</a>
+            <div className="contact-socials" aria-label="Social links">
+              {socials.map((social) => (
+                <a
+                  className="social-link"
+                  href={social.href}
+                  key={social.name}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={social.name}
+                >
+                  <SocialIcon type={social.icon} />
+                </a>
+              ))}
+            </div>
           </div>
 
           <form className="contact-form reveal" onSubmit={handleSubmit}>
@@ -398,3 +526,5 @@ function App() {
 }
 
 export default App;
+
+
